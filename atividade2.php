@@ -2,8 +2,12 @@
 
 class Carta {
 
+    /*Atributos*/
+
     private $numero;
     private $nome;
+
+    /*Metódos*/
 
     public function __toString()
     {
@@ -24,7 +28,7 @@ class Carta {
     /**
      * Set the value of numero
      */
-    public function setNumero($numero): self
+    public function setNumero($numero)
     {
         $this->numero = $numero;
 
@@ -42,7 +46,7 @@ class Carta {
     /**
      * Set the value of nome
      */
-    public function setNome($nome): self
+    public function setNome($nome)
     {
         $this->nome = $nome;
 
@@ -50,57 +54,101 @@ class Carta {
     }
 }
 
+/*Objetos*/ 
+
 $baralho = array();
 
 $carta = new Carta;
-$carta->setNumero(0);
+$carta->setNumero(1);
 $carta->setNome("Dean");
 array_push($baralho, $carta);
 
 $carta2 = new Carta;
-$carta2->setNumero(1);
+$carta2->setNumero(2);
 $carta2->setNome("Sam");
 array_push($baralho, $carta2);
 
 $carta3 = new Carta;
-$carta3->setNumero(2);
+$carta3->setNumero(3);
 $carta3->setNome("Castiel");
 array_push($baralho, $carta3);
 
 $carta4 = new Carta;
-$carta4->setNumero(3);
+$carta4->setNumero(4);
 $carta4->setNome("Azazel");
 array_push($baralho, $carta4);
 
 $carta5 = new Carta;
-$carta5->setNumero(4);
+$carta5->setNumero(5);
 $carta5->setNome("Ruby");
 array_push($baralho, $carta5);
 
 $carta6 = new Carta;
-$carta6->setNumero(5);
+$carta6->setNumero(6);
 $carta6->setNome("Bob");
 array_push($baralho, $carta6);
 
 $carta7 = new Carta;
-$carta7->setNumero(6);
+$carta7->setNumero(7);
 $carta7->setNome("John");
 array_push($baralho, $carta7);
 
+/*programa principal*/
+
 $cartaBaralho = $baralho[array_rand($baralho)];
+$escolhaUsuario = 0;
+$pontos = 6;
+$opcao = 0;
 
-foreach ($baralho as $b) {
-
-    echo $b;
-
-}
-
-$escolhaUsuario = readline("\n\nEscolha uma carta: ");
+/* Menu */
 
 do {
 
-    $escolhaUsuario = readline("\nNão é essa carta, informe outra: ");
+    echo "\n***Jogo-Da-Adivinhação***\n";
 
-} while($escolhaUsuario != $cartaBaralho->getNumero);
+    foreach ($baralho as $b) {
 
-echo ("\nAcertou a carta.");
+        echo $b;
+
+    }
+
+    echo "\n(1)Fazer uma Tentativa";
+    echo "\n(0)Desistir\n\n";
+    $opcao = readLine("\nInforme a Opção: ");
+
+    switch($opcao) {
+
+        case 1: 
+            $escolhaUsuario = readline("\n\nInforme a carta: ");
+            break;
+        case 0:
+            echo "\n\nVocê Perdeu.";
+            break;
+        default :
+            break;
+
+    }
+
+    /* Usei o if para fazer meu programa parar caso o usuario acerte o palpite */
+
+    if($cartaBaralho->getNumero() == $escolhaUsuario) {
+
+        $opcao = 0;
+
+    } else {
+        
+        echo "\nFaça outra tentativa\n";
+        $pontos +=  -1;
+
+    }
+
+} while($opcao != 0);
+
+/* Mensagem Final */
+
+if($cartaBaralho->getNumero() == $escolhaUsuario) {
+
+        echo "\nVocê acertou!" . "\nA carta era:\n\n" . $baralho[$escolhaUsuario] . "\n\nVocê pontuou " . $pontos . "pontos.";
+
+    }
+
